@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kamu Cari Formulir?</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f5f5;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+}
+
+.card{
+width:370px;
+background:white;
+border-radius:25px;
+padding:20px;
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+text-align:center;
+animation:fade .3s;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(15px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+img{
+width:100%;
+border-radius:18px;
+}
+
+button{
+width:100%;
+padding:15px;
+margin-top:20px;
+border:none;
+border-radius:30px;
+background:#18b978;
+color:white;
+font-size:20px;
+cursor:pointer;
+transition:.2s;
+}
+
+button:hover{
+transform:scale(1.02);
+}
+
+#loading,
+#premium{
+display:none;
+}
+
+.progress{
+width:100%;
+height:12px;
+background:#ddd;
+border-radius:20px;
+margin-top:20px;
+overflow:hidden;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:#18b978;
+transition:.1s;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HALAMAN BERUANG -->
+
+<div class="card" id="beruang">
+
+<img src="beruang.png">
+
+<h2 style="margin-top:20px;">
+Klik tombol di bawah ini
+</h2>
+
+<button onclick="loadingPremium()">
+Buka
+</button>
+
+</div>
+
+<!-- LOADING -->
+
+<div class="card" id="loading">
+
+<h2>Memverifikasi akses...</h2>
+
+<p style="margin-top:15px;">
+Sedang membuka paket...
+</p>
+
+<div class="progress">
+
+<div class="bar" id="bar"></div>
+
+</div>
+
+</div>
+<!-- HALAMAN PREMIUM -->
+
+<div class="card" id="premium">
+
+<h2>Paket Standard</h2>
+
+<p style="margin-top:10px;">
+Harga Normal
+<br>
+<b>Rp100.000 / hari</b>
+</p>
+
+<br>
+
+<h2>Paket Premium</h2>
+
+<p style="margin-top:10px;">
+<span style="text-decoration:line-through;color:gray;">
+Rp1.200.000
+</span>
+
+<span style="
+background:orange;
+color:white;
+padding:4px 8px;
+border-radius:15px;
+font-size:12px;">
+HEMAT 38%
+</span>
+</p>
+
+<h1 style="
+color:#18b978;
+margin-top:10px;">
+Rp750.000
+</h1>
+
+<p style="
+font-size:13px;
+color:gray;">
+*Harga belum termasuk PPN
+</p>
+
+<div style="
+margin-top:20px;
+background:#fafafa;
+padding:15px;
+border-radius:15px;
+text-align:left;
+">
+
+<p>✓ Paket Standard aktif selama 1 hari</p>
+<br>
+<p>✓ Paket Premium aktif selama 7 hari</p>
+<br>
+<p>✓ Dokumen bisa langsung di-download</p>
+
+</div>
+
+<button id="upgradeBtn"
+onclick="upgrade()">
+Upgrade Sekarang
+</button>
+
+<p style="
+margin-top:20px;
+font-size:12px;
+color:gray;">
+Syarat & Ketentuan • Kebijakan Privasi
+</p>
+
+</div>
+
+<!-- POPUP -->
+
+<div id="popup"
+style="
+display:none;
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.45);
+justify-content:center;
+align-items:center;">
+
+<div style="
+background:white;
+padding:25px;
+border-radius:20px;
+width:300px;
+text-align:center;">
+
+<h2 style="color:red;">
+❌ Error
+</h2>
+
+<p style="margin-top:15px;">
+Gagal terhubung ke server.
+<br><br>
+Kode Error : ERR-404
+</p>
+
+<button onclick="tutup()">
+Tutup
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+function loadingPremium(){
+
+document.getElementById("beruang").style.display="none";
+document.getElementById("loading").style.display="block";
+
+let bar=document.getElementById("bar");
+
+let persen=0;
+
+let proses=setInterval(function(){
+
+persen+=5;
+
+bar.style.width=persen+"%";
+
+if(persen>=100){
+
+clearInterval(proses);
+
+document.getElementById("loading").style.display="none";
+
+document.getElementById("premium").style.display="block";
+
+}
+
+},100);
+
+}
+
+function upgrade(){
+
+let btn=document.getElementById("upgradeBtn");
+
+btn.innerHTML="Memproses...";
+
+btn.disabled=true;
+
+setTimeout(function(){
+
+btn.innerHTML="Upgrade Sekarang";
+
+btn.disabled=false;
+
+document.getElementById("popup").style.display="flex";
+
+},2000);
+
+}
+
+function tutup(){
+
+document.getElementById("popup").style.display="none";
+
+}
+
+</script>
+
+</body>
+</html>
